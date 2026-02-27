@@ -1,5 +1,5 @@
 import React from 'react';
-import { Todo } from '@/types/todo';
+import { Todo } from '../types/todo';
 
 interface TodoItemProps {
   todo: Todo;
@@ -7,13 +7,25 @@ interface TodoItemProps {
   onDelete: (id: string) => void;
 }
 
-export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) => {
+export const TodoItem: React.FC<TodoItemProps> = ({
+  todo,
+  onToggle,
+  onDelete
+}) => {
+  const handleToggle = () => {
+    onToggle(todo.id);
+  };
+
+  const handleDelete = () => {
+    onDelete(todo.id);
+  };
+
   return (
     <li className="todo-item">
       <input
         type="checkbox"
         checked={todo.completed}
-        onChange={() => onToggle(todo.id)}
+        onChange={handleToggle}
         className="todo-checkbox"
         aria-label={`Mark "${todo.text}" as ${todo.completed ? 'incomplete' : 'complete'}`}
       />
@@ -21,7 +33,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) 
         {todo.text}
       </span>
       <button
-        onClick={() => onDelete(todo.id)}
+        onClick={handleDelete}
         className="todo-delete-button"
         aria-label={`Delete "${todo.text}"`}
       >

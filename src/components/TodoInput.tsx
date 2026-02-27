@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState } from 'react';
 
 interface TodoInputProps {
   onAddTodo: (text: string) => void;
@@ -10,13 +10,14 @@ export const TodoInput: React.FC<TodoInputProps> = ({ onAddTodo }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputValue.trim()) {
-      onAddTodo(inputValue);
+      onAddTodo(inputValue.trim());
       setInputValue('');
     }
   };
 
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && inputValue.trim()) {
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       handleSubmit(e);
     }
   };
@@ -30,14 +31,14 @@ export const TodoInput: React.FC<TodoInputProps> = ({ onAddTodo }) => {
         onKeyPress={handleKeyPress}
         placeholder="What needs to be done?"
         className="todo-input"
-        autoFocus
+        maxLength={200}
       />
       <button
         type="submit"
         disabled={!inputValue.trim()}
         className="todo-add-button"
       >
-        Add Todo
+        Add Task
       </button>
     </form>
   );

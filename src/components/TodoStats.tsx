@@ -1,12 +1,15 @@
 import React from 'react';
-import { Todo } from '@/types/todo';
+import { Todo } from '../types/todo';
 
 interface TodoStatsProps {
   todos: Todo[];
   onClearCompleted: () => void;
 }
 
-export const TodoStats: React.FC<TodoStatsProps> = ({ todos, onClearCompleted }) => {
+export const TodoStats: React.FC<TodoStatsProps> = ({
+  todos,
+  onClearCompleted
+}) => {
   const totalTodos = todos.length;
   const completedTodos = todos.filter(todo => todo.completed).length;
   const activeTodos = totalTodos - completedTodos;
@@ -18,7 +21,17 @@ export const TodoStats: React.FC<TodoStatsProps> = ({ todos, onClearCompleted })
   return (
     <div className="todo-stats">
       <p>
-        {activeTodos} active, {completedTodos} completed, {totalTodos} total
+        <strong>{totalTodos}</strong> total task{totalTodos !== 1 ? 's' : ''}
+        {completedTodos > 0 && (
+          <>
+            , <strong>{completedTodos}</strong> completed
+          </>
+        )}
+        {activeTodos > 0 && (
+          <>
+            , <strong>{activeTodos}</strong> active
+          </>
+        )}
       </p>
       {completedTodos > 0 && (
         <button
@@ -26,7 +39,7 @@ export const TodoStats: React.FC<TodoStatsProps> = ({ todos, onClearCompleted })
           className="todo-add-button"
           style={{ marginTop: '0.5rem' }}
         >
-          Clear Completed
+          Clear Completed ({completedTodos})
         </button>
       )}
     </div>

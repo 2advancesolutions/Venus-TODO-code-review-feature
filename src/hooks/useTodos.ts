@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Todo } from '@/types/todo';
+import { useState, useEffect } from 'react';
+import { Todo } from '../types/todo';
 import { v4 as uuidv4 } from 'uuid';
 
 const STORAGE_KEY = 'venus-todos';
@@ -9,16 +9,17 @@ export const useTodos = () => {
 
   // Load todos from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
+    const storedTodos = localStorage.getItem(STORAGE_KEY);
+    if (storedTodos) {
       try {
-        const parsed = JSON.parse(stored);
-        setTodos(parsed.map((todo: any) => ({
+        const parsedTodos = JSON.parse(storedTodos);
+        setTodos(parsedTodos.map((todo: any) => ({
           ...todo,
           createdAt: new Date(todo.createdAt)
         })));
       } catch (error) {
-        console.error('Failed to load todos from localStorage:', error);
+        console.error('Error loading todos from localStorage:', error);
+        setTodos([]);
       }
     }
   }, []);
@@ -28,33 +29,34 @@ export const useTodos = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = useCallback((text: string) => {
+  const addTodo = (text: string) => {
+    if (!text.trim()) return;
+
     const newTodo: Todo = {
       id: uuidv4(),
       text: text.trim(),
       completed: false,
       createdAt: new Date()
     };
-    setTodos(prev => [...prev, newTodo]);
-  }, []);
 
-  const toggleTodo = useCallback((id: string) => {
-    setTodos(prev => 
-      prev.map(todo => 
-        todo.id === id 
-          ? { ...todo, completed: !todo.completed }
-          : todo
+    setTodos(prevTodos => [...prevTodos, newTodo]);
+  };
+
+  const toggleTodo = (id: string) => {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
-  }, []);
+  };
 
-  const deleteTodo = useCallback((id: string) => {
-    setTodos(prev => prev.filter(todo => todo.id !== id));
-  }, []);
+  const deleteTodo = (id: string) => {
+    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+  };
 
-  const clearCompleted = useCallback(() => {
-    setTodos(prev => prev.filter(todo => !todo.completed));
-  }, []);
+  const clearCompleted = () => {
+    setTodos(prevTodos => prevTodos.filter(todo => !todo.completed));
+  };
 
   return {
     todos,

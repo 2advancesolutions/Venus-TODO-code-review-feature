@@ -1,5 +1,5 @@
 import React from 'react';
-import { Todo } from '@/types/todo';
+import { Todo } from '../types/todo';
 import { TodoItem } from './TodoItem';
 
 interface TodoListProps {
@@ -8,11 +8,15 @@ interface TodoListProps {
   onDeleteTodo: (id: string) => void;
 }
 
-export const TodoList: React.FC<TodoListProps> = ({ todos, onToggleTodo, onDeleteTodo }) => {
+export const TodoList: React.FC<TodoListProps> = ({
+  todos,
+  onToggleTodo,
+  onDeleteTodo
+}) => {
   if (todos.length === 0) {
     return (
       <div className="empty-state">
-        <p>No todos yet! Add one above to get started.</p>
+        <p>No tasks yet. Add your first todo above!</p>
       </div>
     );
   }

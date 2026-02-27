@@ -11,21 +11,21 @@ function App() {
     <div className="todo-app">
       <header className="todo-header">
         <h1>Venus Todo App</h1>
-        <p>Manage your tasks efficiently</p>
+        <p>Organize your tasks efficiently</p>
       </header>
-      
-      <TodoInput onAddTodo={addTodo} />
-      
-      <TodoList
-        todos={todos}
-        onToggleTodo={toggleTodo}
-        onDeleteTodo={deleteTodo}
-      />
-      
-      <TodoStats
-        todos={todos}
-        onClearCompleted={clearCompleted}
-      />
+
+      <main>
+        <TodoInput onAddTodo={addTodo} />
+        <TodoList
+          todos={todos}
+          onToggleTodo={toggleTodo}
+          onDeleteTodo={deleteTodo}
+        />
+        <TodoStats
+          todos={todos}
+          onClearCompleted={clearCompleted}
+        />
+      </main>
     </div>
   );
 }
