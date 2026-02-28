@@ -13,12 +13,16 @@ export const TodoItem: React.FC<TodoItemProps> = ({
   onDelete
 }) => {
   const handleToggle = () => {
+    console.log('TodoItem: handleToggle called for todo:', todo.id, todo.text);
     onToggle(todo.id);
   };
 
   const handleDelete = () => {
+    console.log('TodoItem: handleDelete called for todo:', todo.id, todo.text);
     onDelete(todo.id);
   };
+
+  console.log('TodoItem: Component rendered for todo:', todo.id, todo.text, 'completed:', todo.completed);
 
   return (
     <li className="todo-item">
