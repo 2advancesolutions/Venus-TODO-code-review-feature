@@ -13,7 +13,10 @@ export const TodoList: React.FC<TodoListProps> = ({
   onToggleTodo,
   onDeleteTodo
 }) => {
+  console.log('TodoList: Component rendered with', todos.length, 'todos');
+
   if (todos.length === 0) {
+    console.log('TodoList: No todos found, showing empty state');
     return (
       <div className="empty-state">
         <p>No tasks yet. Add your first todo above!</p>
@@ -21,16 +24,21 @@ export const TodoList: React.FC<TodoListProps> = ({
     );
   }
 
+  console.log('TodoList: Rendering', todos.length, 'todo items');
+
   return (
     <ul className="todo-list">
-      {todos.map(todo => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onToggle={onToggleTodo}
-          onDelete={onDeleteTodo}
-        />
-      ))}
+      {todos.map(todo => {
+        console.log('TodoList: Rendering TodoItem for todo:', todo.id, todo.text);
+        return (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onToggle={onToggleTodo}
+            onDelete={onDeleteTodo}
+          />
+        );
+      })}
     </ul>
   );
 };
