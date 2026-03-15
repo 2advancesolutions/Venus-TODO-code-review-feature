@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    /**
+     * TypeScript compiler options for the main application
+     * 
+     * This configuration targets modern browsers and provides strict type checking
+     * for React development with Vite.
+     */
+    
+    /* Language and Environment */
+    "target": "ES2020",                    // Target modern JavaScript
+    "useDefineForClassFields": true,      // Use define semantics for class fields
+    "lib": ["ES2020", "DOM", "DOM.Iterable"], // Include standard libraries
+    
+    /* Modules */
+    "module": "ESNext",                   // Use ES modules for better tree-shaking
+    "skipLibCheck": true,                 // Skip type checking of declaration files
+    
+    /* Bundler mode - Vite-specific settings */
+    "moduleResolution": "bundler",        // Use bundler module resolution
+    "allowImportingTsExtensions": true,   // Allow importing .ts files
+    "resolveJsonModule": true,            // Allow importing JSON files
+    "isolatedModules": true,              // Ensure each file can be transpiled independently
+    "noEmit": true,                       // Don't emit files (Vite handles this)
+    "jsx": "react-jsx",                   // Use React 17+ JSX transform
+    
+    /* Linting */
+    "strict": true,                       // Enable all strict type checking options
+    "noUnusedLocals": true,               // Report unused local variables
+    "noUnusedParameters": true,           // Report unused parameters
+    "noFallthroughCasesInSwitch": true    // Report fallthrough cases in switch statements
+  },
+  
+  /* Include source files */
+  "include": ["src"],
+  
+  /* Reference to Node.js configuration */
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
